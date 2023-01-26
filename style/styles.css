@@ -37,6 +37,7 @@ body {
   padding: 5px;
   border: 1px solid #E1F2F7;
   min-width: 60px;
+  height: 35px;
 }
 
 .thead, .show_hide {

@@ -18,3 +18,5 @@
    - Google Chrome 109.0.5414.120
    - Microsoft Edge 109.0.1518.61
    - Firefox 72.0.2
+   
+https://github.com/Geetork/infotecs-test-task

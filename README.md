@@ -5,7 +5,7 @@
 Стили расписаны в файлах styles.css, fontello.css.
 
 ## HTML
-В index.html вставлены ссылки на javascript-скрипты, шрифты и стили.
+В index.html вставлены ссылки на javascript-файлы, шрифты и стили.
 
 ## JavaScript
 В директории js расположены следующие js-файлы:

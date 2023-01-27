@@ -162,8 +162,9 @@
     */
   document.querySelector('.show_hide')
     .addEventListener('click', (event) => {
-      if (event.target.id) {
-        window.viewScript.showHideColumn(event.target.id);
+      let element = event.target.closest('td');
+      if (element.id) {
+        window.viewScript.showHideColumn(element.id);
       };
     });
 })();

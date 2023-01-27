@@ -127,51 +127,54 @@
     * @returns {Element} form - элемент (форма)
     */
   const form = (() => {
-    let formElements = [{
-      name: 'div',
-      attributes: { class: 'form hidden' },
-      elementsInside: [{
-          name: 'div',
-          attributes: { class: 'form_header' },
-          elementsInside: [{ name: 'h2', innerText: 'Change Data' }, {
-            name: 'button',
-            attributes: { id: 'close_button', class: 'form_icon form_button_transition' },
-            elementsInside: [{ name: 'i', attributes: { class: 'icon-cancel' }}]
-          },]
-        }, {
-          name: 'input',
-          attributes: { id: 'firstName', type: 'text', class: 'form_item form_input_text', placeholder: 'Name' },
-        }, {
-          name: 'input',
-          attributes: { id: 'lastName', type: 'text', class: 'form_item form_input_text', placeholder: 'Surname' },
-        }, {
-          name: 'textarea',
-          attributes: { id: 'about', type: 'text', class: 'form_item form_textarea', placeholder: 'Write description here...' },
-        }, {
-          name: 'select',
-          attributes: { id: 'eyeColor', class: 'form_item form_select' },
-          elementsInside: [{ name: 'option', attributes: { value: 'blue', label: 'blue' },
-          },
-          { name: 'option', attributes: { value: 'brown', label: 'brown' },
-          },
-          { name: 'option', attributes: { value: 'green', label: 'green' },
-          },
-          { name: 'option', attributes: { value: 'red', label: 'red' },
-          }]
-        }, {
+    let form = createElement('div', { class: 'form hidden' });
+    let formInner = document.createDocumentFragment();
+    let input = [{
+        name: 'div',
+        attributes: { class: 'form_header' },
+        elementsInside: [{ name: 'h2', innerText: 'Change Data' }, {
           name: 'button',
-          attributes: {
-            id: 'change_button', class: 'form_button form_button_transition', type: 'submit'
-          },
-          innerText: 'Save'
-        },
-      ]
+          attributes: { id: 'close_button',
+                        class: 'form_icon form_button_transition' },
+          elementsInside: [{ name: 'i', attributes: { class: 'icon-cancel' }}]
+        },]
+      }, { name: 'input',
+           attributes: { id: 'firstName', type: 'text',
+                         class: 'form_item form_input_text',
+                         placeholder: 'Name' },
+      }, { name: 'input',
+           attributes: { id: 'lastName', type: 'text',
+                         class: 'form_item form_input_text',
+                         placeholder: 'Surname' },
+      }, { name: 'textarea',
+           attributes: { id: 'about', type: 'text',
+                         class: 'form_item form_textarea',
+                         placeholder: 'Write description here...' },
     }];
 
-    let form = createElemensInsideElements(formElements);
+    let select = createElement('select', { id: 'eyeColor',
+                                           class: 'form_item form_select' });
+    let options = document.createDocumentFragment();
+    let colors = ['blue', 'brown', 'green', 'red'];
+    for (let i = 0; i < colors.length; i++) {
+      options.append(createElemensInsideElements([{  name: 'option',
+                                                     attributes: { value: colors[i], label: colors[i] },
+                                                     innerText: colors[i] }]));
+    };
+    let button = [{
+      name: 'button',
+      attributes: { id: 'change_button', class: 'form_button form_button_transition', type: 'submit' },
+      innerText: 'Save'
+    }];
+
+    select.appendChild(options);
+    formInner.append(createElemensInsideElements(input));
+    formInner.append(select);
+    formInner.append(createElemensInsideElements(button));
+    form.appendChild(formInner);
     container.appendChild(form);
 
-    return document.querySelector('.form');
+    return form;
   })();
 
 
@@ -193,7 +196,7 @@
       for (let i = 0; i < rowData.length - 1; i++) {
         let td = createElement('td');
         td.innerText = rowData[i];
-        if (i === 2) td.classList.add('truncate');
+        if (i === 2 && rowData[i] !== '') td.classList.add('truncate');
         if (i === 3) colorCell(td);
         tr.appendChild(td);
       };
@@ -304,7 +307,9 @@
       document.querySelector(`#${id} i`).classList.replace('icon-plus', 'icon-minus');
       document.querySelectorAll(`tr td:nth-child(${columnNumber})`).forEach((td) => {
         td.classList.remove('hide');
-        if (id === 'firstRow3' && td.innerText !== 'About' && td.id !== 'firstRow3')
+        if (id === 'firstRow3' && td.innerText !== 'About'
+                               && td.id !== 'firstRow3'
+                               && td.innerText !== '')
           td.classList.add('truncate');
       });
     };
